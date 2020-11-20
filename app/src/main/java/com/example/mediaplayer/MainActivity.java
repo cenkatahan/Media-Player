@@ -18,8 +18,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         musics = new ArrayList<>();
-        musics.add("Pentagram-Sonsuz");
-        musics.add("Mor ve Ötesi-Uyan");
+        musics.add("Pentagram - Bir");
+        musics.add("Mor ve Ötesi - Bir Derdim Var");
+        musics.add("Badem - Sen Aglama");
 
         ArrayAdapter<String> listAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, musics);
         listView = findViewById(R.id.listView);
