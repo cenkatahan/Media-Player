@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton playButton;
     private ImageButton stopButton;
     private ImageButton nextMusicButton;
+    private TextView currentSong;
 
     private ArrayList<String> musics;
     private int songIndex;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         playButton = findViewById(R.id.musicPlayButton);
         stopButton = findViewById(R.id.musicStopButton);
         nextMusicButton = findViewById(R.id.musicNextButton);
+        currentSong = findViewById(R.id.textView);
 
         //musics
         musics = new ArrayList<>();
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         musics.add("Duman - Öyle Dertli");
         musics.add("Badem - Sen Ağlama");
         //setting an adapter
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, musics);
+        final ArrayAdapter<String> listAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, musics);
         listView = findViewById(R.id.musicsListView);
         listView.setAdapter(listAdapter);
 
@@ -55,20 +58,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (songIndex){
                     case 0:
                         musicPlayer = MediaPlayer.create(MainActivity.this, R.raw.pentagram_bir);
+                        currentSong.setText("Pentagram - Bir is now playing.");
                         musicPlayer.start();
                         break;
                     case 1:
                         musicPlayer = MediaPlayer.create(MainActivity.this, R.raw.duman_oyledertli);
+                        currentSong.setText("Duman - Öyle Dertli is now playing.");
                         musicPlayer.start();
                         break;
                     case 2:
                         musicPlayer = MediaPlayer.create(MainActivity.this, R.raw.badem_senaglama);
+                        currentSong.setText("Badem - Sen Ağlama is now playing.");
                         musicPlayer.start();
                         break;
                 }
@@ -82,11 +89,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        nextMusicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                songIndex++;
+                songIndex = songIndex%3;
+                Toast.makeText(MainActivity.this, "next song is "+listView.getItemAtPosition(songIndex),Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }
-    
+
+
 
 }
 
